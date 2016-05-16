@@ -1,0 +1,66 @@
+<FilesMatch "\.(ttf|otf|eot|woff|woff2|webfont.svg|font.css)$">
+    <IfModule mod_headers.c>
+        Header set Access-Control-Allow-Origin "*"
+    </IfModule>
+</FilesMatch>
+
+AddType text/x-component .htc
+AddType application/octet-stream .woff
+AddType application/vnd.ms-fontobject   eot
+AddType font/truetype   ttf
+AddType font/opentype   otf
+AddType application/x-font-woff woff
+
+<filesMatch "\.(html|htm|txt|manifest)$">
+    FileETag None
+    <ifModule mod_headers.c>
+        Header unset ETag
+        Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
+        Header set Pragma "no-cache"
+        Header set Expires "Wed, 11 Jan 1984 05:00:00 GMT"
+    </ifModule>
+ </filesMatch>
+
+# GZIP Control:
+<IfModule mod_deflate.c>
+    SetOutputFilter DEFLATE
+    AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/x-javascript application/x-httpd-php
+    BrowserMatch ^Mozilla/4 gzip-only-text/html
+    BrowserMatch ^Mozilla/4\.0[678] no-gzip
+    BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+    BrowserMatch \bMSI[E] !no-gzip !gzip-only-text/html
+    SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)$ no-gzip
+    Header append Vary User-Agent env=!dont-vary
+
+    <FilesMatch "\.(ttf|otf|eot|svg|woff2)$" >
+        SetOutputFilter DEFLATEss
+        Header unset Set-Cookie
+    </FilesMatch>
+</IfModule>
+
+<IfModule mod_expires.c>
+    ExpiresActive on
+    ExpiresDefault  "access plus 1 month"
+
+    <FilesMatch "\.(png|jpg)$">
+        ExpiresDefault "access plus 1 years"
+        Header unset Set-Cookie
+    </FilesMatch>
+
+    <FilesMatch "\.(css|js)$">
+        ExpiresDefault "access plus 5 years"
+        Header unset Set-Cookie
+    </FilesMatch>
+
+    <FilesMatch "\.(ttf|otf|eot|svg|woff2)$">
+          ExpiresDefault "access plus 5 years"
+          Header set Cache-Control "public"
+          Header unset Set-Cookie
+    </FilesMatch>
+</IfModule>
+
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews
+    </IfModule>
+</IfModule>
