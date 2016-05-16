@@ -58,9 +58,3 @@ AddType application/x-font-woff woff
           Header unset Set-Cookie
     </FilesMatch>
 </IfModule>
-
-<IfModule mod_rewrite.c>
-    <IfModule mod_negotiation.c>
-        Options -MultiViews
-    </IfModule>
-</IfModule>
