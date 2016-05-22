@@ -1,3 +1,29 @@
+/**
+ *  24px == 15 minutes
+ *  (Smallest unit of measurement is 15 minutes)
+ *
+ */
+
+var timeUnit = {
+    minutes: 15,
+    pixels: 24
+};
+
+var time = {
+    start: {
+        hours: 9,
+        minutes: 0
+    },
+    end: {
+        hours: 17,
+        minutes: 0
+    },
+    unit: {
+        minutes: 15,
+        pixels: 24
+    }
+};
+
 interact('.session')
     .draggable({
         // enable inertial throwing
@@ -24,7 +50,6 @@ interact('.session')
     });
 
 
-
 interact('.session')
     .resizable({
         preserveAspectRatio: false,
@@ -32,7 +57,7 @@ interact('.session')
         edges: {left: false, right: false, bottom: true, top: false}
     })
     .on('resizemove', function (event) {
-        if($(event.target).hasClass("scheduled")) {
+        if ($(event.target).hasClass("scheduled")) {
             var target = event.target,
                 x = (parseFloat(target.getAttribute('data-x')) || 0),
                 y = (parseFloat(target.getAttribute('data-y')) || 0);
@@ -41,7 +66,7 @@ interact('.session')
             target.style.width = roundOffToMultiple(event.rect.width) + 'px';
             target.style.height = roundOffToMultiple(event.rect.height) + 'px';
 
-            target.textContent = Math.round(event.rect.width) + '×' + Math.round(event.rect.height);
+            updateElementTime($(event.target));
         }
     });
 
@@ -75,8 +100,10 @@ interact('.track-inner').dropzone({
         $sessionElement.css("top", $sessionElement.data("top") + "px");
 
         var isColliding = sessionOverlapTest($trackDropZone, $sessionElement);
-        if(!isColliding) {
-            updatePersistence();
+        if (!isColliding) {
+            updateCounterBadge();
+            updateElementTime($sessionElement);
+            updateColor($sessionElement);
         } else {
             $sessionElement.appendTo($(".sessions-holder"));
             $sessionElement.addClass('unscheduled').removeClass('scheduled');
@@ -87,7 +114,7 @@ interact('.track-inner').dropzone({
         var $trackDropZone = $(event.target);
         var $sessionElement = $(event.relatedTarget);
         $trackDropZone.removeClass('drop-now').removeClass('drop-active');
-        if(!$sessionElement.hasClass("scheduled")) {
+        if (!$sessionElement.hasClass("scheduled")) {
             $sessionElement.css({
                 "-webkit-transform": "",
                 "transform": ""
@@ -99,8 +126,8 @@ interact('.track-inner').dropzone({
 
 var $tracks = $(".track");
 
-function updatePersistence() {
-    $.each($tracks, function( index, $track ) {
+function updateCounterBadge() {
+    $.each($tracks, function (index, $track) {
         $track = $($track);
         var sessionsCount = $track.find(".track-inner > .session.scheduled").length;
         $track.find(".track-header > .badge").text(sessionsCount);
@@ -108,14 +135,14 @@ function updatePersistence() {
 }
 
 function roundOffToMultiple(val, multiple) {
-    if(!multiple) {
+    if (!multiple) {
         multiple = 24;
     }
-    if(val > 0) {
-        var roundUp = Math.ceil(val/multiple) * multiple;
-        var roundDown = Math.floor(val/multiple) * multiple;
+    if (val > 0) {
+        var roundUp = Math.ceil(val / multiple) * multiple;
+        var roundDown = Math.floor(val / multiple) * multiple;
 
-        if(val >= roundDown + 12) {
+        if (val >= roundDown + 12) {
             return roundUp;
         } else {
             return roundDown;
@@ -130,9 +157,9 @@ function sessionOverlapTest($track, $session) {
     var $otherSessions = $track.find(".session.scheduled");
     var returnVal;
     returnVal = false;
-    $.each($otherSessions, function( index, $otherSession ) {
+    $.each($otherSessions, function (index, $otherSession) {
         $otherSession = $($otherSession);
-        if(!$otherSession.is($session) && collision($otherSession, $session)) {
+        if (!$otherSession.is($session) && collision($otherSession, $session)) {
             returnVal = $otherSession;
         }
     });
@@ -156,14 +183,49 @@ function collision($div1, $div2) {
     return !(b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2);
 }
 
+function updateColor($element) {
+    $element.css("background-color", randomColor({
+        hue: 'green',
+        luminosity: 'dark'
+    }));
+}
 /*
  *
- * TIME CALCULATION
- * 24px == 15 minutes
- *
- * Smallest unit of measurement is 15 minutes
  *
  */
 
 
+var timeline = {
+    days : ["May 18", "May 19", "May 20"],
+    tracks: [
+        {
+            name: "Android Track",
+            sessions: [
+                {
+                    id: 1,
+                    top: 23,
+                    mins: 33,
+                    start: "09:00 AM",
+                    end: "10:00 AM",
+                    name: "Session 1"
+                }
+            ]
+        }
+    ]
+};
 
+function updateElementTime($element) {
+    var startTime = moment({ hour:time.start.hours, minute:time.start.minutes });
+    var mins = ($element.outerHeight(false) / time.unit.pixels) * time.unit.minutes;
+    var topInterval = (($element.data("top") - time.unit.pixels) / time.unit.pixels) * time.unit.minutes;
+
+    var startTimeString = startTime.add(topInterval, 'm').format("LT");
+    var endTimeString = startTime.add(topInterval + mins, "m").format("LT");
+
+    $element.data("start-time", startTimeString).data("end-time", endTimeString);
+    $element.find(".time").text(startTimeString + " to " + endTimeString);
+}
+
+function persistTimeline() {
+
+}

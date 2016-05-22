@@ -6,7 +6,6 @@
     background-color: #efefef;
     border: solid #b6b6b6 1px;
     color: #3d3d3d;
-    padding: 10px;
     height: 48px;
     width: 216px;
     display: flex;
@@ -16,11 +15,18 @@
 .unscheduled {
     margin-bottom: 3px;
     cursor: all-scroll !important;
+    padding: 10px;
 }
 
 .scheduled {
     position: absolute !important;
     top: 120px;
+    padding: 5px;
+    color: white;
+}
+
+.scheduled > .time {
+    color: white;
 }
 
 .timeline-table td {

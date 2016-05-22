@@ -101,27 +101,38 @@
 
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel" style="min-height:600px;">
+
                             <div class="row">
                                 <div class="col-xs-3 sessions-holder" style="width: 20%;">
                                     <h4>Sessions</h4><br>
-                                    <div class="session unscheduled">
-                                        Session 1
+                                    <div class="session unscheduled" data-id="1">
+                                        <span class="title">Session 1</span>&nbsp;&nbsp;&nbsp;
+                                        <i class="small time text-muted"></i>
                                     </div>
-                                    <div class="session unscheduled">
-                                        Session 2
+                                    <div class="session unscheduled" data-id="2">
+                                        <span class="title">Session 2</span>&nbsp;&nbsp;&nbsp;
+                                        <i class="small time text-muted"></i>
                                     </div>
-                                    <div class="session unscheduled">
-                                        Session 3
+                                    <div class="session unscheduled" data-id="3">
+                                        <span class="title">Session 3</span>&nbsp;&nbsp;&nbsp;
+                                        <i class="small time text-muted"></i>
                                     </div>
-                                    <div class="session unscheduled">
-                                        Session 4
+                                    <div class="session unscheduled" data-id="4">
+                                        <span class="title">Session 4</span>&nbsp;&nbsp;&nbsp;
+                                        <i class="small time text-muted"></i>
                                     </div>
-                                    <div class="session unscheduled">
-                                        Session 5
+                                    <div class="session unscheduled" data-id="5">
+                                        <span class="title">Session 5</span>&nbsp;&nbsp;&nbsp;
+                                        <i class="small time text-muted"></i>
                                     </div>
                                 </div>
                                 <div class="col-xs-9">
-                                    <div class="timeline">
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn btn-default date-change-btn active">May 18</button>
+                                        <button type="button" class="btn btn-default date-change-btn">May 19</button>
+                                        <button type="button" class="btn btn-default date-change-btn">May 20</button>
+                                    </div>
+                                    <div class="timeline" style="margin-top: 10px;">
                                         <table class="timeline-table table">
                                             <tbody>
                                             <tr>
@@ -247,6 +258,8 @@
 
 
 <!-- SCRIPTS FOR SCHEDULER -->
+<script src="js/randomColor.min.js"></script>
+<script src="js/moment.min.js"></script>
 <script src="js/interact.min.js"></script>
 <script src="js/scheduler.js"></script>
 
