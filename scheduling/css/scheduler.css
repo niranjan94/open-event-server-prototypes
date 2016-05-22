@@ -1,27 +1,26 @@
-.events-holder {
+.sessions-holder {
     z-index: 1 !important;
 }
 
-.event {
+.session {
     background-color: #efefef;
     border: solid #b6b6b6 1px;
     color: #3d3d3d;
-    padding: 5px;
+    padding: 10px;
     height: 48px;
     width: 216px;
     display: flex;
     align-items: center;
-    cursor: all-scroll;
 }
 
 .unscheduled {
     margin-bottom: 3px;
+    cursor: all-scroll !important;
 }
 
 .scheduled {
     position: absolute !important;
     top: 120px;
-    z-index: 5 !important;
 }
 
 .timeline-table td {
@@ -71,14 +70,14 @@
     background-size: initial;
 }
 
-.timeline .rooms .room-container {
+.timeline .rooms .track-container {
     overflow-x: scroll;
     overflow-y: hidden;
     white-space: nowrap;
     width: 654px;
 }
 
-.timeline .rooms .room {
+.timeline .rooms .track {
     display: inline-block;
     position: relative;
     width: 216px;
@@ -86,7 +85,7 @@
     margin-left: -4px;
 }
 
-.timeline .rooms .room:first-child {
+.timeline .rooms .track:first-child {
     margin-left: 0;
 }
 
@@ -94,12 +93,12 @@
     text-align: center;
 }
 
-.timeline .rooms.x1 .room-header {
+.timeline .rooms.x1 .track-header {
     height: 23px;
     line-height: 23px;
 }
 
-.timeline .rooms .room-header {
+.timeline .rooms .track-header {
     width: 100%;
     position: absolute;
     background-color: rgb(250, 250, 250);
@@ -128,7 +127,7 @@
     display: none;
 }
 
-.timeline .rooms .room-header .badge {
+.timeline .rooms .track-header .badge {
     padding: 2px 4px;
     font-size: 10px;
     font-weight: normal;
@@ -137,7 +136,7 @@
     vertical-align: text-bottom;
 }
 
-.room-item {
+.track-item {
     position: absolute;
     width: 215px;
     display: block;
@@ -145,7 +144,7 @@
     min-height: 24px;
 }
 
-.room-inner.drop-now {
+.track-inner.drop-now {
     background-color: rgba(220, 220, 220, 0.35);
 }
 

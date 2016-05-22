@@ -1,4 +1,4 @@
-interact('.event')
+interact('.session')
     .draggable({
         // enable inertial throwing
         inertia: true,
@@ -27,7 +27,7 @@ interact('.event')
 
 interact('.room-inner').dropzone({
     // only accept elements matching this CSS selector
-    accept: '.event',
+    accept: '.session',
     // Require a 75% element overlap for a drop to be possible
     overlap: 0.50,
 
